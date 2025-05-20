@@ -27,6 +27,8 @@ jobs:
      steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          repository: swiftlang/swift-docker
       - name: Checkout https://github.com/swiftlang/swift-docker/pull/467
         run: gh pr checkout 467
         env:
