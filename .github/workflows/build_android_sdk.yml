@@ -144,7 +144,6 @@ jobs:
           echo 'import Android' >> Sources/DemoProject/DemoProject.swift
       - name: Test Demo Project on Android
         uses: skiptools/swift-android-action@main
-        if: false # disabled until Testing framework is working
         with:
           # only test for the complete arch SDK build to speed up CI
           #run-tests: ${{ matrix.arch == '' }}
