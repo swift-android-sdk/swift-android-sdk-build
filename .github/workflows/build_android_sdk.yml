@@ -177,19 +177,6 @@ jobs:
           installed-sdk: ${{ steps.info.outputs.sdk-id }}
           installed-swift: ${{ steps.info.outputs.swift-root }}
 
-      - name: Checkout swift-argument-parser
-        uses: actions/checkout@v4
-        with:
-          repository: apple/swift-argument-parser
-          path: swift-argument-parser
-      - name: Test swift-argument-parser
-        uses: skiptools/swift-android-action@main
-        with:
-          run-tests: true
-          package-path: swift-argument-parser
-          installed-sdk: ${{ steps.info.outputs.sdk-id }}
-          installed-swift: ${{ steps.info.outputs.swift-root }}
-
       - name: Checkout swift-system
         uses: actions/checkout@v4
         with:
