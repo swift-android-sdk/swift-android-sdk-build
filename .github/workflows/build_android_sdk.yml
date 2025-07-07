@@ -29,11 +29,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: swiftlang/swift-docker
-      - name: Checkout https://github.com/swiftlang/swift-docker/pull/467
-        run: gh pr checkout 467
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #repository: swiftlang/swift-docker
+          repository: swift-android-sdk/swift-docker
       - name: Free Disk Space
         run: |
           df -h
@@ -143,7 +140,7 @@ jobs:
           echo 'import Dispatch' >> Sources/DemoProject/DemoProject.swift
           echo 'import Android' >> Sources/DemoProject/DemoProject.swift
       - name: Test Demo Project on Android
-        uses: skiptools/swift-android-action@main
+        uses: swift-android-sdk/swift-android-action@main
         with:
           # only test for the complete arch SDK build to speed up CI
           #run-tests: ${{ matrix.arch == '' }}
@@ -157,7 +154,7 @@ jobs:
           repository: apple/swift-algorithms
           path: swift-algorithms
       - name: Test swift-algorithms
-        uses: skiptools/swift-android-action@main
+        uses: swift-android-sdk/swift-android-action@main
         with:
           run-tests: true
           package-path: swift-algorithms
@@ -170,7 +167,7 @@ jobs:
           repository: skiptools/swift-android-native
           path: swift-android-native
       - name: Test swift-android-native
-        uses: skiptools/swift-android-action@main
+        uses: swift-android-sdk/swift-android-action@main
         with:
           run-tests: true
           package-path: swift-android-native
@@ -183,7 +180,7 @@ jobs:
           repository: apple/swift-system
           path: swift-system
       - name: Test swift-system
-        uses: skiptools/swift-android-action@main
+        uses: swift-android-sdk/swift-android-action@main
         with:
           run-tests: true
           package-path: swift-system
