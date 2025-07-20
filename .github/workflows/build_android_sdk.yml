@@ -133,7 +133,13 @@ jobs:
       - name: Check ELF Alignment
         # https://developer.android.com/guide/practices/page-sizes#alignment-use-script
         run: |
-          ./swift-android-sdk-build/scripts/check_elf_alignment.sh ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/swift-resources/usr/lib/swift-aarch64/android/
+          CHECK_ELF_ALIGNMENT=$(realpath ./swift-android-sdk-build/scripts/check_elf_alignment.sh)
+          ls ~/.swiftpm/swift-sdks/
+          ls ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/
+          ls ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/swift-resources/usr/lib/
+          ls ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/swift-resources/usr/lib/swift-aarch64/android/
+          cd ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/swift-resources/usr/lib/swift-aarch64/android/
+          ${CHECK_ELF_ALIGNMENT} .
       - name: Create Demo Project
         run: |
           cd ${{ runner.temp }}
