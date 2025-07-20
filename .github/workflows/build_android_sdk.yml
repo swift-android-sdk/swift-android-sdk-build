@@ -26,7 +26,7 @@ jobs:
          swift-version: ['swift-6.2-branch', 'development']
      runs-on: ubuntu-24.04
      steps:
-      - name: Checkout repository
+      - name: Checkout swift-docker
         uses: actions/checkout@v4
         with:
           #repository: swiftlang/swift-docker
@@ -125,10 +125,15 @@ jobs:
           # recent releases require that ANDROID_NDK_ROOT *not* be set
           # see https://github.com/swiftlang/swift-driver/pull/1879
           echo "ANDROID_NDK_ROOT=" >> $GITHUB_ENV
+      - name: Checkout swift-android-sdk-build
+        uses: actions/checkout@v4
+        with:
+          repository: swift-android-sdk/swift-android-sdk-build
+          path: swift-android-sdk-build
       - name: Check ELF Alignment
         # https://developer.android.com/guide/practices/page-sizes#alignment-use-script
         run: |
-          ./scripts/check_elf_alignment.sh ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/swift-resources/usr/lib/swift-aarch64/android/
+          ./swift-android-sdk-build/scripts/check_elf_alignment.sh ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/swift-resources/usr/lib/swift-aarch64/android/
       - name: Create Demo Project
         run: |
           cd ${{ runner.temp }}
