@@ -125,7 +125,10 @@ jobs:
           # recent releases require that ANDROID_NDK_ROOT *not* be set
           # see https://github.com/swiftlang/swift-driver/pull/1879
           echo "ANDROID_NDK_ROOT=" >> $GITHUB_ENV
-
+      - name: Check ELF Alignment
+        # https://developer.android.com/guide/practices/page-sizes#alignment-use-script
+        run: |
+          ./scripts/check_elf_alignment.sh ~/.swiftpm/swift-sdks/*.artifactbundle/swift-android/swift-resources/usr/lib/swift-aarch64/android/
       - name: Create Demo Project
         run: |
           cd ${{ runner.temp }}
