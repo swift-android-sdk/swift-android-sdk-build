@@ -48,19 +48,19 @@ jobs:
           echo "BUILD_SCHEME=${{ matrix.swift-version }}" >> $GITHUB_ENV
           echo "TARGET_ARCHS=${{ matrix.arch }}" >> $GITHUB_ENV
           echo "WORKDIR=${{ runner.temp }}/swift-android-sdk" >> $GITHUB_ENV
-          SWIFT_TAG=$(curl -fsSL https://download.swift.org/${{ matrix.swift-version }}/ubuntu2404/latest-build.yml | grep '^dir: ' | cut -f 2 -d ' ')
-          echo "SWIFT_TAG=${SWIFT_TAG}" >> $GITHUB_ENV
+          SWIFT_VERSION=$(curl -fsSL https://download.swift.org/${{ matrix.swift-version }}/ubuntu2404/latest-build.yml | grep '^dir: ' | cut -f 2 -d ' ')
+          echo "SWIFT_VERSION=${SWIFT_VERSION}" >> $GITHUB_ENV
       - name: Build Android SDK (Local)
         if: ${{ matrix.build-type == 'local' }}
         working-directory: swift-ci/sdks/android
         run: |
           sudo apt install -q ninja-build patchelf
-          ./build-local tag:${SWIFT_TAG} ${WORKDIR}
+          ./build-local tag:${SWIFT_VERSION} ${WORKDIR}
       - name: Build Android SDK (Docker)
         if: ${{ matrix.build-type == 'docker' }}
         working-directory: swift-ci/sdks/android
         run: |
-          ./build-docker tag:${SWIFT_TAG} ${WORKDIR}
+          ./build-docker tag:${SWIFT_VERSION} ${WORKDIR}
       - name: Install Host Toolchain
         if: ${{ matrix.build-type == 'docker' }}
         working-directory: swift-ci/sdks/android
