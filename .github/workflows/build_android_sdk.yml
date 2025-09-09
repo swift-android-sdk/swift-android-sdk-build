@@ -22,7 +22,7 @@ jobs:
          #arch: ['x86_64']
          # build both the quick (x86_64) and complete (aarch64,x86_64,armv7) SDKs
          #arch: ['x86_64', '']
-         #swift-version: ['release', 'swift-6.2-branch', 'development']
+         #swift-version: ['swift-6.2-RELEASE', 'swift-6.3-branch', 'development']
          swift-version: ['swift-6.2-branch', 'development']
      runs-on: ubuntu-24.04
      steps:
@@ -48,19 +48,20 @@ jobs:
           echo "BUILD_SCHEME=${{ matrix.swift-version }}" >> $GITHUB_ENV
           echo "TARGET_ARCHS=${{ matrix.arch }}" >> $GITHUB_ENV
           echo "WORKDIR=${{ runner.temp }}/swift-android-sdk" >> $GITHUB_ENV
-          SWIFT_VERSION=$(curl -fsSL https://download.swift.org/${{ matrix.swift-version }}/ubuntu2404/latest-build.yml | grep '^dir: ' | cut -f 2 -d ' ')
-          echo "SWIFT_VERSION=${SWIFT_VERSION}" >> $GITHUB_ENV
+          # fetch the tag associated with the latest published build for the specific Swift version
+          SWIFT_TAG=$(curl -fsSL https://download.swift.org/${{ matrix.swift-version }}/ubuntu2404/latest-build.yml | grep '^dir: ' | cut -f 2 -d ' ')
+          echo "SWIFT_TAG=${SWIFT_TAG}" >> $GITHUB_ENV
       - name: Build Android SDK (Local)
         if: ${{ matrix.build-type == 'local' }}
         working-directory: swift-ci/sdks/android
         run: |
           sudo apt install -q ninja-build patchelf
-          ./build-local tag:${SWIFT_VERSION} ${WORKDIR}
+          ./build-local tag:${SWIFT_TAG} ${WORKDIR}
       - name: Build Android SDK (Docker)
         if: ${{ matrix.build-type == 'docker' }}
         working-directory: swift-ci/sdks/android
         run: |
-          ./build-docker tag:${SWIFT_VERSION} ${WORKDIR}
+          ./build-docker tag:${SWIFT_TAG} ${WORKDIR}
       - name: Install Host Toolchain
         if: ${{ matrix.build-type == 'docker' }}
         working-directory: swift-ci/sdks/android
@@ -69,6 +70,7 @@ jobs:
           # local host toolchain, but we need one in order to run
           # the SDK validation tests, so we install it now
           HOST_OS=ubuntu$(lsb_release -sr)
+          SWIFT_VERSION="tag:${SWIFT_TAG}"
           source ./scripts/toolchain-vars.sh
           mkdir -p ${WORKDIR}/host-toolchain
           ./scripts/install-swift.sh ${WORKDIR}/host-toolchain/$SWIFT_BASE/usr
