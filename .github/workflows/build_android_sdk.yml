@@ -30,6 +30,8 @@ jobs:
         with:
           #repository: swiftlang/swift-docker
           repository: swift-android-sdk/swift-docker
+          # fix for true_false
+          branch: twerk
       - name: Free Disk Space
         run: |
           df -h
