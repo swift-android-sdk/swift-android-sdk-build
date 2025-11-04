@@ -199,6 +199,8 @@ jobs:
           repository: apple/swift-system
           path: swift-system
       - name: Test swift-system
+        # disabled due to https://github.com/apple/swift-system/pull/256#pullrequestreview-3413430845
+        if: false
         uses: swift-android-sdk/swift-android-action@main
         with:
           run-tests: true
