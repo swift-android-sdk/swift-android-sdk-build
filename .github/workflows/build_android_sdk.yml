@@ -26,12 +26,12 @@ jobs:
      runs-on: ubuntu-24.04
      steps:
       - name: Checkout swift-docker
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          #repository: swiftlang/swift-docker
-          repository: swift-android-sdk/swift-docker
+          repository: swiftlang/swift-docker
+          #repository: swift-android-sdk/swift-docker
           # fix for true_false
-          ref: twerk
+          #ref: twerk
       - name: Free Disk Space
         run: |
           df -h
@@ -112,7 +112,7 @@ jobs:
           # swift-6.1-RELEASE_android-0.1-x86_64.artifactbundle.tar.gz.zip
           echo "artifact-name=${ARTIFACT_NAME}" >> $GITHUB_OUTPUT
       - name: Upload SDK artifactbundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           compression-level: 0
           name: ${{ steps.info.outputs.artifact-name }}
@@ -135,7 +135,7 @@ jobs:
           # see https://github.com/swiftlang/swift-driver/pull/1879
           echo "ANDROID_NDK_ROOT=" >> $GITHUB_ENV
       - name: Checkout swift-android-sdk-build
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: swift-android-sdk/swift-android-sdk-build
           path: swift-android-sdk-build
@@ -168,7 +168,7 @@ jobs:
           installed-swift: ${{ steps.info.outputs.swift-root }}
 
       - name: Checkout swift-algorithms
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: apple/swift-algorithms
           path: swift-algorithms
@@ -181,7 +181,7 @@ jobs:
           installed-swift: ${{ steps.info.outputs.swift-root }}
 
       - name: Checkout swift-android-native
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: skiptools/swift-android-native
           path: swift-android-native
@@ -194,7 +194,7 @@ jobs:
           installed-swift: ${{ steps.info.outputs.swift-root }}
 
       - name: Checkout swift-system
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: apple/swift-system
           path: swift-system
