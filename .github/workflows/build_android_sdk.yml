@@ -152,6 +152,7 @@ jobs:
           cd DemoProject
           ${{ steps.info.outputs.swift-path }} --version
           ${{ steps.info.outputs.swift-path }} package init
+          echo '' >> Sources/DemoProject/DemoProject.swift
           echo 'import Foundation' >> Sources/DemoProject/DemoProject.swift
           echo 'import FoundationEssentials' >> Sources/DemoProject/DemoProject.swift
           echo 'import FoundationXML' >> Sources/DemoProject/DemoProject.swift
@@ -183,7 +184,7 @@ jobs:
       - name: Checkout swift-android-native
         uses: actions/checkout@v6
         with:
-          repository: skiptools/swift-android-native
+          repository: swift-android-sdk/swift-android-native
           path: swift-android-native
       - name: Test swift-android-native
         uses: swift-android-sdk/swift-android-action@main
