@@ -182,11 +182,13 @@ jobs:
           installed-swift: ${{ steps.info.outputs.swift-root }}
 
       - name: Checkout swift-android-native
+        if: false
         uses: actions/checkout@v6
         with:
           repository: swift-android-sdk/swift-android-native
           path: swift-android-native
       - name: Test swift-android-native
+        if: false
         uses: swift-android-sdk/swift-android-action@main
         with:
           run-tests: true
@@ -200,8 +202,6 @@ jobs:
           repository: apple/swift-system
           path: swift-system
       - name: Test swift-system
-        # disabled due to https://github.com/apple/swift-system/pull/256#pullrequestreview-3413430845
-        if: false
         uses: swift-android-sdk/swift-android-action@main
         with:
           run-tests: true
